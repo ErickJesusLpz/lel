@@ -1,0 +1,38 @@
+# Datos de ejemplo sobre estudiantes
+estudiantes = [
+    {
+        'id': 1,
+        'nombre': 'Juan',
+        'edad': 20,
+        'curso': 'Programación'
+    },
+    {
+        'id': 2,
+        'nombre': 'María',
+        'edad': 22,
+        'curso': 'Matemáticas'
+    },
+    {
+        'id': 3,
+        'nombre': 'Pedro',
+        'edad': 21,
+        'curso': 'Historia'
+    }
+]
+
+# Ruta para obtener todos los estudiantes
+@app.route('/estudiantes', methods=['GET'])
+def obtener_estudiantes():
+    return jsonify({'estudiantes': estudiantes})
+
+# Ruta para obtener un estudiante por ID
+@app.route('/estudiantes/<int:estudiante_id>', methods=['GET'])
+def obtener_estudiante(estudiante_id):
+    estudiante = next((est for est in estudiantes if est['id'] == estudiante_id), None)
+    if estudiante:
+        return jsonify({'estudiante': estudiante})
+    else:
+        return jsonify({'mensaje': 'Estudiante no encontrado'}), 404
+
+if _name_ == '_main_':
+    app.run(debug=True)
